@@ -18,7 +18,7 @@ class DataSQLite3 implements DataBase
     /**
      * Open an SQLite3 connection
      */
-    public function open(): void
+    final public function open(): void
     {
         $this->dbh = (new SQLite3Connection($this->databaseName))->getConnection();
     }
@@ -26,7 +26,7 @@ class DataSQLite3 implements DataBase
     /**
      * Closes the SQLite3 connection
      */
-    public function close()
+    final public function close()
     {
         $this->dbh->close();
     }
@@ -53,7 +53,7 @@ class DataSQLite3 implements DataBase
      * Error from the database
      * @return DataError
      */
-    public function error(): DataError
+    final public function error(): DataError
     {
         return (new DataError($this->dbh->lastErrorCode(), $this->dbh->lastErrorMsg()));
     }
@@ -63,7 +63,7 @@ class DataSQLite3 implements DataBase
      * @param string $tableName
      * @return bool
      */
-    public function tableExists(string $tableName): bool
+    final public function tableExists(string $tableName): bool
     {
         if (!empty($tableName)) {
             $exists = $this->fetch("SELECT name FROM sqlite_master WHERE type='table' AND name = '{$tableName}'");
@@ -90,7 +90,7 @@ class DataSQLite3 implements DataBase
      * The default date format for this database type
      * @return string
      */
-    public function getDefaultDatabaseDateFormat(): string
+    final public function getDefaultDatabaseDateFormat(): string
     {
         return "Y-m-d";
     }
@@ -99,7 +99,7 @@ class DataSQLite3 implements DataBase
      * Returns the last id after an insert to a table
      * @return string Gets the last id
      */
-    public function getLastId(): string
+    final public function getLastId(): string
     {
         $lastId = $this->fetch("SELECT last_insert_rowid() as last_id");
         return $lastId->records(0)[0]->lastId;
@@ -110,7 +110,7 @@ class DataSQLite3 implements DataBase
      * @param null $transactionId
      * @return bool
      */
-    public function commit($transactionId = null): bool
+    final public function commit($transactionId = null): bool
     {
         //No commit for sqlite
         return true;
@@ -121,7 +121,7 @@ class DataSQLite3 implements DataBase
      * @param null $transactionId
      * @return bool
      */
-    public function rollback($transactionId = null): bool
+    final public function rollback($transactionId = null): bool
     {
         //No transactions for sqlite
         return true;
@@ -131,7 +131,7 @@ class DataSQLite3 implements DataBase
      * Start transaction
      * @return string
      */
-    public function startTransaction(): string
+    final public function startTransaction(): string
     {
         //No transactions for sqlite
 
@@ -143,7 +143,7 @@ class DataSQLite3 implements DataBase
      * @param bool $onState
      * @return bool
      */
-    public function autoCommit(bool $onState = false): void
+    final public function autoCommit(bool $onState = false): void
     {
         //SQlite3 has no commits
 
@@ -153,7 +153,7 @@ class DataSQLite3 implements DataBase
      * Determines the database layout in the form table -> columns
      * @return array
      */
-    public function getDatabase(): array
+    final public function getDatabase(): array
     {
         return (new SQLite3MetaData($this))->getDatabaseMetaData();
     }
@@ -181,7 +181,7 @@ class DataSQLite3 implements DataBase
      * Is it a No SQL database?
      * @return bool
      */
-    public function isNoSQL(): bool
+    final public function isNoSQL(): bool
     {
         return false;
     }
