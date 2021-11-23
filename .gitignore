@@ -1,0 +1,8 @@
+/tina4php-sqlite3.iml
+/vendor/
+/.idea/
+/test.db
+/test.db-shm
+/test.db-wal
+/tests/junit.xml
+/phpmetrics/
