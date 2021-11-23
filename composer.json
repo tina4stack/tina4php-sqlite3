@@ -1,5 +1,5 @@
 {
-  "name": "tina4stack/tina4php-odbc",
+  "name": "tina4stack/tina4php-sqlite3",
   "description": "Tina4 PHP Sqlite3 Database Driver",
   "license": "MIT",
   "autoload": {
