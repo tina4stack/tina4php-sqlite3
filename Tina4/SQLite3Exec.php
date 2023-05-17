@@ -30,16 +30,19 @@ class SQLite3Exec extends DataConnection implements DataBaseExec
 
         if ($error->getError()["errorCode"] === 0 && !empty($preparedQuery)) {
             unset($params[0]);
-
             foreach ($params as $pid => $param) {
-                if (is_numeric($param)) {
-                    $preparedQuery->bindValue((string)($pid), $param, SQLITE3_FLOAT);
+
+                if (is_string($param)) {
+                   $preparedQuery->bindValue((int)($pid), $param, SQLITE3_TEXT);
+                }
+                elseif (is_numeric($param)) {
+                    $preparedQuery->bindValue((int)($pid), $param, SQLITE3_FLOAT);
                 } elseif (is_int($param)) {
-                    $preparedQuery->bindValue((string)($pid), $param, SQLITE3_INTEGER);
+                    $preparedQuery->bindValue((int)($pid), $param, SQLITE3_INTEGER);
                 } elseif ($this->isBinary($param)) {
-                    $preparedQuery->bindValue((string)($pid), $param, SQLITE3_BLOB);
+                    $preparedQuery->bindValue((int)($pid), $param, SQLITE3_BLOB);
                 } else {
-                    $preparedQuery->bindValue((string)($pid), $param, SQLITE3_TEXT);
+                    $preparedQuery->bindValue((int)($pid), $param, SQLITE3_TEXT);
                 }
             }
 

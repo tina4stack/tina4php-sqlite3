@@ -39,7 +39,7 @@ class DataSQLite3Test extends TestCase
 
         $this->DBA->commit();
 
-        $error = $this->DBA->exec("create table testing(id integer default 0, name varchar(200) default 'Name', age integer default 22, salary numeric (10,2), my_date timestamp default '01/01/1900', my_date_2 timestamp default 'now', my_date_3 date default '01/01/1900', primary key(id))");
+        $error = $this->DBA->exec("create table testing(id integer default 0, name varchar(200) default 'Name', contact_number varchar(20) default '', age integer default 22, salary numeric (10,2), my_date timestamp default '01/01/1900', my_date_2 timestamp default 'now', my_date_3 date default '01/01/1900', primary key(id))");
 
         $this->DBA->commit();
 
@@ -66,6 +66,18 @@ class DataSQLite3Test extends TestCase
         $result = $this->DBA->exec("insert into testing (name) values ('Hello') RETURNING id")->asArray();
 
         $this->assertEquals(4, $result[0]["id"], "Id does not match");
+
+        $this->DBA->exec("insert into testing (id, contact_number) values (?, ?)", 5, "0836464535");
+
+        $record = $this->DBA->fetchOne("select * from testing where id = 5")->asArray();
+
+        $this->assertTrue(is_string("0836464535"), "Not a string");
+
+        $this->assertEquals("0836464535",  $record["contactNumber"], "Contact number does not match");
+
+
+
+
     }
 
     final public function testGetDatabase(): void
