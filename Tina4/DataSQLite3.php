@@ -185,4 +185,13 @@ class DataSQLite3 implements DataBase
     {
         return false;
     }
+
+    /**
+     * Returns the database alias for use in migrations
+     * @return string
+     */
+    final public function getShortName(): string
+    {
+        return "sqlite3";
+    }
 }
