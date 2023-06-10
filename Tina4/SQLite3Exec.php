@@ -33,7 +33,7 @@ class SQLite3Exec extends DataConnection implements DataBaseExec
             foreach ($params as $pid => $param) {
 
                 if (is_string($param)) {
-                   $preparedQuery->bindValue((int)($pid), $param, SQLITE3_TEXT);
+                   $preparedQuery->bindValue((int)($pid), $param, SQLITE3_BLOB);
                 }
                 elseif (is_numeric($param)) {
                     $preparedQuery->bindValue((int)($pid), $param, SQLITE3_FLOAT);
