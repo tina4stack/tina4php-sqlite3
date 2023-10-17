@@ -24,6 +24,7 @@ class SQLite3Connection
         $this->connection = (new \SQLite3($databaseName)); //create the new database or open existing one
         $this->connection->busyTimeout(5000); //prevent database locks
         $this->connection->exec('PRAGMA journal_mode = wal;'); //help with concurrency
+        $this->connection->exec('PRAGMA encoding="UTF-8";');
     }
 
     /**
