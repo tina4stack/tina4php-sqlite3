@@ -66,7 +66,8 @@ class DataSQLite3 implements DataBase
     final public function tableExists(string $tableName): bool
     {
         if (!empty($tableName)) {
-            $exists = $this->fetch("SELECT name FROM sqlite_master WHERE type='table' AND name = '{$tableName}'");
+            $exists = $this->fetch("SELECT name FROM sqlite_master WHERE type in ('table','view') AND name = '{$tableName}'");
+
             return !empty($exists->records);
         }
 
