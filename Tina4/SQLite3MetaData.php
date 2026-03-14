@@ -56,6 +56,13 @@ class SQLite3MetaData extends DataConnection implements DataBaseMetaData
     {
         $tableInformation = [];
 
+        // Build foreign key lookup
+        $foreignKeys = $this->getForeignKeys($tableName);
+        $foreignKeyLookup = [];
+        foreach ($foreignKeys as $foreignKey) {
+            $foreignKeyLookup[$foreignKey->fieldName] = true;
+        }
+
         $sqlInfo = "pragma table_info($tableName)";
         $columns = $this->getConnection()->fetch($sqlInfo, 10000)->asObject();
 

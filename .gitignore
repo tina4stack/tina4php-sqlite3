@@ -6,3 +6,5 @@
 /test.db-wal
 /tests/junit.xml
 /phpmetrics/
+.phpunit.cache
+.claude/

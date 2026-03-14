@@ -28,7 +28,7 @@ class SQLite3Connection
     }
 
     /**
-     * Returns a databse connection or false if failed
+     * Returns a database connection or false if failed
      * @return false|resource
      */
     final public function getConnection()
