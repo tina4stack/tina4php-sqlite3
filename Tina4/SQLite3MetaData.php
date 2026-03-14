@@ -12,6 +12,7 @@ namespace Tina4;
  */
 class SQLite3MetaData extends DataConnection implements DataBaseMetaData
 {
+    use DataBaseMetaDataHelper;
 
     /**
      * Gets all the tables
@@ -56,12 +57,8 @@ class SQLite3MetaData extends DataConnection implements DataBaseMetaData
     {
         $tableInformation = [];
 
-        // Build foreign key lookup
-        $foreignKeys = $this->getForeignKeys($tableName);
-        $foreignKeyLookup = [];
-        foreach ($foreignKeys as $foreignKey) {
-            $foreignKeyLookup[$foreignKey->fieldName] = true;
-        }
+        $keyLookups = $this->buildKeyLookups($tableName);
+        $foreignKeyLookup = $keyLookups['foreign'];
 
         $sqlInfo = "pragma table_info($tableName)";
         $columns = $this->getConnection()->fetch($sqlInfo, 10000)->asObject();
@@ -96,21 +93,4 @@ class SQLite3MetaData extends DataConnection implements DataBaseMetaData
         return $tableInformation;
     }
 
-    /**
-     * Main function to get metadata
-     * @return array
-     */
-    final public function getDatabaseMetaData(): array
-    {
-        $database = [];
-        $tables = $this->getTables();
-
-        foreach ($tables as $record) {
-            $tableInfo = $this->getTableInformation($record->tableName);
-
-            $database[strtolower($record->tableName)] = $tableInfo;
-        }
-
-        return $database;
-    }
 }
